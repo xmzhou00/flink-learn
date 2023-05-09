@@ -1,4 +1,4 @@
-package com.flinkcore.state;
+package com.flinkcore.restart;
 
 import org.apache.flink.api.common.restartstrategy.RestartStrategies;
 import org.apache.flink.api.common.time.Time;
@@ -23,7 +23,7 @@ public class CheckpointApp {
         /* ****************************************checkpoint配置**************************************************** */
 
         /*
-         * 默认情况下 checkpoint是禁用的。通过调用
+         * 默认情况下 checkpoint是禁用的
          */
         // 每 1000ms 开始一次 checkpoint
         env.enableCheckpointing(1000);
