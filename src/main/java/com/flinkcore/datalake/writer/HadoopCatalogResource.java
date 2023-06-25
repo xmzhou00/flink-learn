@@ -1,4 +1,4 @@
-package com.flinkcore.datalake;
+package com.flinkcore.datalake.writer;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.hadoop.conf.Configuration;

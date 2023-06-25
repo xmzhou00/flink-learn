@@ -1,4 +1,4 @@
-package com.flinkcore.datalake;
+package com.flinkcore.datalake.writer;
 
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.typeutils.RowTypeInfo;
@@ -55,8 +55,7 @@ public class FlinkIcebergSink {
         final HadoopCatalogResource catalogResource =
                 new HadoopCatalogResource(DATABASE, TABLE);
 
-
-        List<Row> rows = Lists.newArrayList(Row.of(1, "hello"), Row.of(2, "world"), Row.of(3, "foo"));
+        List<Row> rows = Lists.newArrayList(Row.of(4, "iceberg"), Row.of(5, "delta"), Row.of(6, "hudi"));
 
         Schema schema =
                 new Schema(

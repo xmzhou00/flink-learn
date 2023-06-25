@@ -1,4 +1,4 @@
-package com.flinkcore.datalake;
+package com.flinkcore.datalake.writer;
 
 import org.apache.flink.api.common.state.CheckpointListener;
 import org.apache.flink.streaming.api.functions.source.SourceFunction;
