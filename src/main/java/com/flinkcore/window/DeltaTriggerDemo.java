@@ -35,7 +35,9 @@ public class DeltaTriggerDemo {
                 Tuple4.of("car1", 5, 13000, 105),
                 Tuple4.of("car1", 6, 16000, 95),
                 Tuple4.of("car1", 7, 21001, 124),
-                Tuple4.of("car1", 8, 23000, 134));
+                Tuple4.of("car1", 8, 23000, 134),
+                Tuple4.of("car1", 9, 33000, 111)
+        );
 
         carData.assignTimestampsAndWatermarks(
                         WatermarkStrategy
@@ -73,18 +75,17 @@ public class DeltaTriggerDemo {
                     @Override
                     public void process(String s, ProcessWindowFunction<Tuple4<String, Integer, Integer, Integer>, Object, String, GlobalWindow>.Context context, Iterable<Tuple4<String, Integer, Integer, Integer>> elements, Collector<Object> out) throws Exception {
                         Iterator<Tuple4<String, Integer, Integer, Integer>> iterator = elements.iterator();
-//                        int maxSpeed = 0;
+                        int maxSpeed = 0;
                         while (iterator.hasNext()) {
                             Tuple4<String, Integer, Integer, Integer> next = iterator.next();
                             System.out.println(next);
-//                            maxSpeed = Math.max(maxSpeed, next.f3);
+                            maxSpeed = Math.max(maxSpeed, next.f3);
                         }
-
-                        System.out.println("==============================");
-//                        out.collect(maxSpeed);
+//                        System.out.println("==============================");
+                        out.collect(maxSpeed);
                     }
-                });
-//                .print();
+                })
+                .print("result:=> ");
 
         env.execute();
 
