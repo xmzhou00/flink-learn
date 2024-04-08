@@ -26,6 +26,7 @@ public class DeltaTriggerDemo {
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
         env.setParallelism(1);
+        // 数据格式：车牌号、上报时间、当前上报时间的位置、车速
         DataStreamSource<Tuple4<String, Integer, Integer, Integer>> carData = env.fromElements(
                 Tuple4.of("car1", 1, 999, 111),
                 Tuple4.of("car1", 2, 3000, 191),
@@ -47,17 +48,17 @@ public class DeltaTriggerDemo {
                                 })
                 ).keyBy(t -> t.f0)
                 .window(GlobalWindows.create())
-                .evictor(new Evictor<Tuple4<String, Integer, Integer, Integer>, GlobalWindow>() {
-                    @Override
-                    public void evictBefore(Iterable<TimestampedValue<Tuple4<String, Integer, Integer, Integer>>> elements, int size, GlobalWindow window, EvictorContext evictorContext) {
-                        System.out.println("evictor before");
-                    }
-
-                    @Override
-                    public void evictAfter(Iterable<TimestampedValue<Tuple4<String, Integer, Integer, Integer>>> elements, int size, GlobalWindow window, EvictorContext evictorContext) {
-                        System.out.println("evictor after");
-                    }
-                })
+//                .evictor(new Evictor<Tuple4<String, Integer, Integer, Integer>, GlobalWindow>() {
+//                    @Override
+//                    public void evictBefore(Iterable<TimestampedValue<Tuple4<String, Integer, Integer, Integer>>> elements, int size, GlobalWindow window, EvictorContext evictorContext) {
+//                        System.out.println("evictor before");
+//                    }
+//
+//                    @Override
+//                    public void evictAfter(Iterable<TimestampedValue<Tuple4<String, Integer, Integer, Integer>>> elements, int size, GlobalWindow window, EvictorContext evictorContext) {
+//                        System.out.println("evictor after");
+//                    }
+//                })
                 .trigger(PurgingTrigger.of(DeltaTrigger.of(10000, new DeltaFunction<Tuple4<String, Integer, Integer, Integer>>() {
                     @Override
                     public double getDelta(
